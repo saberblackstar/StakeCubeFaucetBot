@@ -1,7 +1,8 @@
 # StakeCube Faucet Bot
 
 Hello and welcome to my StakeCube faucet bot project!<br>
-This is just a small bot that is designed to collect all faucets on StakeCube for you.
+This is just a small bot that is designed to collect all faucets on StakeCube for you.<br>
+It is programmed in C# ASP.NET Core as console application.
 
 You only need to enter your current __cfduid and your phpsessid to grant the bot access.
 
