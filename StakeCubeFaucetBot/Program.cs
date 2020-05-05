@@ -15,6 +15,7 @@ namespace RealStakeCubeFaucetBot
 
         static Task Main(string[] args)
         {
+            Console.Title = "StakeCube Faucet Bot";
             Console.Write("Please enter your CFDUID: ");
             CFDUID = Console.ReadLine();
             Console.Clear();
