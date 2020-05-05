@@ -55,10 +55,10 @@ namespace RealStakeCubeFaucetBot
                 else
                 {
                     Console.WriteLine("Bot-Status: Claiming.");
-                    if (nextClaimIn == 0)
+                    if (nextClaimIn <= 0)
                     {
                         //Claim now
-                        ClaimFaucets(CFDUID, PHPSESSID, response);
+                        ClaimFaucets(CFDUID, PHPSESSID);
                     }
                 }
 
@@ -68,8 +68,11 @@ namespace RealStakeCubeFaucetBot
                     System.Threading.Thread.Sleep(10000);
                 else if (nextClaimIn > 5)
                     System.Threading.Thread.Sleep(5000);
+                else if (nextClaimIn < 0)
+                    System.Threading.Thread.Sleep(1000);
                 else if (nextClaimIn <= 5)
                     System.Threading.Thread.Sleep(nextClaimIn * 1000 + 999);
+
             }
         }
 
@@ -129,23 +132,34 @@ namespace RealStakeCubeFaucetBot
 
         private static IRestResponse GetFaucets(string cfduid, string phpsessid)
         {
-            var client = new RestClient("https://stakecube.net/app/community/functions");
-            client.Timeout = -1;
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101 Firefox/75.0");
-            request.AddHeader("X-Requested-With", "XMLHttpRequest");
-            request.AddHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-            request.AddHeader("Referer", "https://stakecube.net/app/community/faucets");
-            request.AddHeader("TE", "Trailers");
-            request.AddHeader("Cookie", $"PHPSESSID={phpsessid}; __cfduid={cfduid}; darkmode=true");
-            request.AddParameter("ACTION", "GET_FAUCETS");
-            return client.Execute(request);
+            IRestResponse response;
+            while (true)
+            {
+                var client = new RestClient("https://stakecube.net/app/community/functions")
+                {
+                    Timeout = 10000
+                };
+                var request = new RestRequest(Method.POST);
+                request.AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101 Firefox/75.0");
+                request.AddHeader("X-Requested-With", "XMLHttpRequest");
+                request.AddHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+                request.AddHeader("Referer", "https://stakecube.net/app/community/faucets");
+                request.AddHeader("TE", "Trailers");
+                request.AddHeader("Cookie", $"PHPSESSID={phpsessid}; __cfduid={cfduid}");
+                request.AddParameter("ACTION", "GET_FAUCETS");
+                response = client.Execute(request);
+                if (!response.IsSuccessful)
+                    continue;
+                else
+                    break;
+            }
+            return response;
         }
 
-        private static void ClaimFaucets(string cfduid, string phpsessid, IRestResponse response)
+        private static void ClaimFaucets(string cfduid, string phpsessid)
         {
             Faucet nextToClaim;
-            while ((nextToClaim = NextClaimableFaucet(response)) != null)
+            while ((nextToClaim = NextClaimableFaucet(cfduid, phpsessid)) != null)
             {
                 RequestFaucetClaim(nextToClaim, cfduid, phpsessid);
             }
@@ -153,22 +167,30 @@ namespace RealStakeCubeFaucetBot
 
         private static IRestResponse RequestFaucetClaim(Faucet faucet, string cfduid, string phpsessid)
         {
-            var client = new RestClient("https://stakecube.net/app/community/functions");
-            client.Timeout = -1;
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101 Firefox/75.0");
-            request.AddHeader("X-Requested-With", "XMLHttpRequest");
-            request.AddHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-            request.AddHeader("Referer", "https://stakecube.net/app/community/faucets");
-            request.AddHeader("TE", "Trailers");
-            request.AddHeader("Cookie", $"PHPSESSID={phpsessid}; __cfduid={cfduid}; darkmode=true");
-            request.AddParameter("ACTION", "CLAIM_FAUCET");
-            request.AddParameter("ID", $"{faucet.ID}");
-            return client.Execute(request);
+            IRestResponse response;
+            while (true)
+            {
+                var client = new RestClient("https://stakecube.net/app/community/functions")
+                {
+                    Timeout = 10000
+                };
+                var request = new RestRequest(Method.POST);
+                request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+                request.AddHeader("Cookie", $"__cfduid={cfduid}; PHPSESSID={phpsessid}");
+                request.AddParameter("ACTION", "CLAIM_FAUCET");
+                request.AddParameter("ID", $"{faucet.ID}");
+                response = client.Execute(request);
+                if (!response.IsSuccessful)
+                    continue;
+                else
+                    break;
+            }
+            return response;
         }
 
-        private static Faucet NextClaimableFaucet(IRestResponse response)
+        private static Faucet NextClaimableFaucet(string cfduid, string phpsessid)
         {
+            IRestResponse response = GetFaucets(cfduid, phpsessid);
             JsonSerializerSettings settings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Include
@@ -193,7 +215,7 @@ namespace RealStakeCubeFaucetBot
                     amountPerClaim = Convert.ToDouble(faucet.AMOUNT_PER_CLAIM);
                 }
 
-                if (amountPerClaim <= balance && faucet.DIFF_IN_SEC == null)
+                if (amountPerClaim <= balance && (faucet.DIFF_IN_SEC == null || faucet.DIFF_IN_SEC >= 86400))
                 {
                     return faucet;
                 }
