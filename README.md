@@ -1,4 +1,4 @@
-# StakeCubeFaucetBot
+# StakeCube Faucet Bot
 
 Hello and welcome to my StakeCube faucet bot project!<br>
 This is just a small bot that is designed to collect all faucets on StakeCube for you.
