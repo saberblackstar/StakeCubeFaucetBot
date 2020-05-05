@@ -28,7 +28,7 @@ Best is to keep the bot running 24/7.<br>
 
 <h3>To acquire your __cfduid and your phpsessid:</h3>
 <h4>For Chrome:</h4>
-Press F12 to open the console and reload the StakeCube page.<br>
+Press F12 to open the console and reload the StakeCube page while being logged in.<br>
 In the console window navigate to "Application" under the small extension arrow (http://prntscr.com/sb69px).<br>
 In the left menu select "cookies" and then "https://stakecube.net".<br>
 Here you'll find both - your __cfduid and your phpsessid.<br>
@@ -36,7 +36,7 @@ Here you'll find both - your __cfduid and your phpsessid.<br>
 
 <h4>For Firefox:</h4>
 Activate the "Web Developer" extension of firefox in the firefox addons. (may need firefox restart)<br>
-Press F12 to open the console and reload the StakeCube page.<br>
+Press F12 to open the console and reload the StakeCube page while being logged in.<br>
 Go to "Networkanalysis" in the console window.<br>
 Click any entry.<br>
 In the small info window to the right switch to "cookies".<br>
