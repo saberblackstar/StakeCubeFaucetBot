@@ -28,7 +28,7 @@ Best is to keep the bot running 24/7.<br>
 <br>
 
 <h3>Requirements:</h3>
-.NET Core 3.1
+.NET Core 3.1<br>
 
 <h3>To acquire your __cfduid and your phpsessid:</h3>
 <h4>For Chrome:</h4>
