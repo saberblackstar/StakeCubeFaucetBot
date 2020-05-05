@@ -44,9 +44,7 @@ namespace RealStakeCubeFaucetBot
             {
                 //Look for claims
                 IRestResponse response = GetFaucets(CFDUID, PHPSESSID);
-                nextClaimIn = Convert.ToInt32(GetNextClaimTime(response.Content));
-                if (nextClaimIn > 0)
-                    nextClaimIn = 86400 - nextClaimIn;
+                nextClaimIn = 86400 - Convert.ToInt32(GetNextClaimTime(response.Content));
                 Console.Clear();
                 if (nextClaimIn > 5)
                 {
@@ -76,7 +74,7 @@ namespace RealStakeCubeFaucetBot
 
         private static long GetNextClaimTime(string content)
         {
-            long smallestDiff = long.MaxValue;
+            long smallestDiff = long.MinValue;
 
             JsonSerializerSettings settings = new JsonSerializerSettings
             {
@@ -102,10 +100,10 @@ namespace RealStakeCubeFaucetBot
                     amountPerClaim = Convert.ToDouble(faucet.AMOUNT_PER_CLAIM);
                 }
 
-                if (amountPerClaim <= balance && faucet.DIFF_IN_SEC < smallestDiff || faucet.DIFF_IN_SEC == null)
+                if (amountPerClaim <= balance && (faucet.DIFF_IN_SEC > smallestDiff || faucet.DIFF_IN_SEC == null))
                 {
                     if (faucet.DIFF_IN_SEC == null)
-                        smallestDiff = 0;
+                        smallestDiff = 86400;
                     else
                         smallestDiff = Convert.ToInt64(faucet.DIFF_IN_SEC);
                 }
@@ -194,7 +192,7 @@ namespace RealStakeCubeFaucetBot
                     amountPerClaim = Convert.ToDouble(faucet.AMOUNT_PER_CLAIM);
                 }
 
-                if (amountPerClaim <= balance && (faucet.DIFF_IN_SEC > 0 || faucet.DIFF_IN_SEC == null))
+                if (amountPerClaim <= balance && faucet.DIFF_IN_SEC == null)
                 {
                     return faucet;
                 }
