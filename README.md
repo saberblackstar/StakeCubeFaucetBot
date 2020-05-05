@@ -41,7 +41,7 @@ Here you'll find both - your __cfduid and your phpsessid.<br>
 <br><br><br>
 
 <h4>Donations</h4>
-If you like this bot please consider a small donation to one of my donation adresses:<br>
+If you like this bot please consider a small donation to one of my donation addresses:<br>
 BTC:35eGdwAwKRw1zy7xBi2gXd7N8eBPemGdQE<br>
 SCC:sPkPptzng1DGXWndsJc8X9BA3CZZpTKp2F<br>
 DASH:Xr2EXioHGVqxrJY7ULqsjkT7xfmr29h4Kq<br>
