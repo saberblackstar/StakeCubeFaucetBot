@@ -15,6 +15,11 @@ When a claim possibility is detected the bot will send the according request to 
 Enter your cfduid and phpsessid when promted for them.<br>
 After this confirm that the bot shall start.<br>
 Keep the console window open to keep the bot running.<br>
+<br>
+The refresh rate is fixxed at one minute.<br>
+Do not panic when you do not see refreshs more often.<br>
+The closer the bot gets to claiming the higher the refresh rate will become automatically.<br>
+<br>
 Best is to keep the bot running 24/7.<br>
 <br>
 
