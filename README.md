@@ -38,8 +38,18 @@ Go to "Networkanalysis" in the console window.<br>
 Click any entry.<br>
 In the small info window to the right switch to "cookies".<br>
 Here you'll find both - your __cfduid and your phpsessid.<br>
+<br><br><br>
 
-
+<h4>Donations</h4>
+If you like this bot please consider a small donation to one of my donation adresses:<br>
+BTC:35eGdwAwKRw1zy7xBi2gXd7N8eBPemGdQE<br>
+SCC:sPkPptzng1DGXWndsJc8X9BA3CZZpTKp2F<br>
+DASH:Xr2EXioHGVqxrJY7ULqsjkT7xfmr29h4Kq<br>
+LTC:MPD4n6YxkaUhjQs9s1jsFjbA948SS2KU45<br>
+DOGE:DC8x7fvrA6cm2gQF9FcJoqDg62tLE5wmAM<br>
+ESBC:eL7fu5vSk3hcq8L2y9fGUdgcnpNz7iK9xz<br>
+TRBO:TDiJhpGjFVvebhtmpQD1uc1tP5zwfbkV3R<br>
+RPD:Rav3JhC1UfTsssPEp14K6MNphja3SYoyGN<br>
 
 <br><br><br><br><br>
 <h4>Disclaimer</h4>
