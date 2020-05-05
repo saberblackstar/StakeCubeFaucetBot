@@ -79,7 +79,7 @@ namespace RealStakeCubeFaucetBot
 
         private static long GetNextClaimTime(string content)
         {
-            long smallestDiff = long.MinValue;
+            long highestDiff = long.MinValue;
 
             JsonSerializerSettings settings = new JsonSerializerSettings
             {
@@ -105,15 +105,15 @@ namespace RealStakeCubeFaucetBot
                     amountPerClaim = Convert.ToDouble(faucet.AMOUNT_PER_CLAIM);
                 }
 
-                if (amountPerClaim <= balance && (faucet.DIFF_IN_SEC > smallestDiff || faucet.DIFF_IN_SEC == null))
+                if (amountPerClaim <= balance && (faucet.DIFF_IN_SEC > highestDiff || faucet.DIFF_IN_SEC == null))
                 {
                     if (faucet.DIFF_IN_SEC == null)
-                        smallestDiff = 86400;
+                        highestDiff = 86400;
                     else
-                        smallestDiff = Convert.ToInt64(faucet.DIFF_IN_SEC);
+                        highestDiff = Convert.ToInt64(faucet.DIFF_IN_SEC);
                 }
             }
-            return smallestDiff;
+            return highestDiff;
         }
 
         private static void ConfigureFaucet(ref Faucet faucetToConfigure, dynamic token)
@@ -126,6 +126,7 @@ namespace RealStakeCubeFaucetBot
                     if (property.Name.Equals(childToken.Name))
                     {
                         property.SetValue(faucetToConfigure, childToken.Value.Value);
+                        break;
                     }
                 }
             }
