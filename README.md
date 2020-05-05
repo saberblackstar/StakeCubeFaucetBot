@@ -3,7 +3,7 @@
 Hello and welcome to my StakeCube faucet bot project!<br>
 This is just a small bot that is designed to collect all faucets on StakeCube for you.<br>
 
-It is programmed in C# ASP.NET Core as console application.<br>
+It is written in C# ASP.NET Core as console application.<br>
 You need Visual Studio 2019 to open it.<br>
 Or you can simply download the released portable version from the releases.
 
