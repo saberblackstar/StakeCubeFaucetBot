@@ -49,7 +49,8 @@ namespace RealStakeCubeFaucetBot
                 if (nextClaimIn > 5)
                 {
                     //No claims found
-                    Console.WriteLine($"Bot-Status: running. Next claim in: {nextClaimIn} seconds");
+                    TimeSpan span = new TimeSpan(0, 0, nextClaimIn);
+                    Console.WriteLine($"Bot-Status: running. Next claim in: {span.Hours}:{span.Minutes}:{span.Seconds}");
                 }
                 else
                 {
